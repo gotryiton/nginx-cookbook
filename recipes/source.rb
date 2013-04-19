@@ -161,6 +161,7 @@ bash "compile_nginx_source" do
   code <<-EOH
     tar zxf #{::File.basename(src_filepath)} -C #{::File.dirname(src_filepath)} &&
     cd nginx-#{node['nginx']['source']['version']} &&
+    #{node.run_state['nginx_patches'].join(" && ")} &&
     ./configure #{node.run_state['nginx_configure_flags'].join(" ")} &&
     make && make install
   EOH
