@@ -60,6 +60,7 @@ remote_file nginx_url do
   backup false
 end
 
+node.run_state['nginx_patches'] = []
 node.run_state['nginx_force_recompile'] = false
 node.run_state['nginx_configure_flags'] =
   node['nginx']['source']['default_configure_flags'] | node['nginx']['configure_flags']
