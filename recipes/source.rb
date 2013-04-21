@@ -65,6 +65,8 @@ node.run_state['nginx_force_recompile'] = false
 node.run_state['nginx_configure_flags'] =
   node['nginx']['source']['default_configure_flags'] | node['nginx']['configure_flags']
 
+monit = false
+
 case node['nginx']['init_style']
 when "runit"
   node.set['nginx']['src_binary'] = node['nginx']['binary']
@@ -138,6 +140,8 @@ else
     supports :status => true, :restart => true, :reload => true
     action :enable
   end
+
+  monit = true
 end
 
 include_recipe "nginx::commons_conf"
@@ -175,6 +179,10 @@ bash "compile_nginx_source" do
   end
 
   notifies :restart, "service[nginx]"
+end
+
+if monit
+  monit_watch "nginx"
 end
 
 node.run_state.delete('nginx_configure_flags')
