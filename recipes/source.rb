@@ -107,7 +107,9 @@ when "none"
 
   service "nginx" do
     supports :status => true, :restart => true, :reload => true
+    restart_command "echo nothing > /dev/null"
     reload_command "echo nothing > /dev/null"
+    status_command "echo nothing > /dev/null"
     start_command "echo nothing > /dev/null"
     stop_command "echo nothing > /dev/null"
     action :nothing
