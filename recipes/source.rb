@@ -102,6 +102,16 @@ when "bluepill"
     reload_command "[[ -f #{node['nginx']['pid']} ]] && kill -HUP `cat #{node['nginx']['pid']}` || true"
     action :nothing
   end
+when "none"
+  node.set['nginx']['daemon_disable'] = true
+
+  service "nginx" do
+    supports :status => true, :restart => true, :reload => true
+    reload_command nil
+    start_command nil
+    stop_command nil
+    action :enable
+  end
 else
   node.set['nginx']['daemon_disable'] = false
 
@@ -187,3 +197,4 @@ end
 
 node.run_state.delete('nginx_configure_flags')
 node.run_state.delete('nginx_force_recompile')
+node.run_state.delete('nginx_patches')
