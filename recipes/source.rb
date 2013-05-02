@@ -110,7 +110,7 @@ when "none"
     reload_command "echo nothing > /dev/null"
     start_command "echo nothing > /dev/null"
     stop_command "echo nothing > /dev/null"
-    action :enable
+    action :nothing
   end
 else
   node.set['nginx']['daemon_disable'] = false
